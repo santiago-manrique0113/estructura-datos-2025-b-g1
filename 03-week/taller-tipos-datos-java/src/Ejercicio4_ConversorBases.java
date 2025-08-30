@@ -1,11 +1,17 @@
 import java.math.BigInteger;
+import java.util.Scanner;
 
 public class Ejercicio4_ConversorBases {
 
     public static void main(String[] args) {
-        // Número en formato de texto (string)
-        String numero = "FFFFFFFFFFFFFFFF"; // ejemplo en hexadecimal
-        int baseOrigen = 16; // base del número (2=binario, 10=decimal, 16=hexadecimal)
+        Scanner Leer = new Scanner(System.in);
+
+        // Pedimos número y base al usuario
+        System.out.print("Ingrese el número: ");
+        String numero = Leer.nextLine();
+
+        System.out.print("Ingrese la base del número (2=binario, 10=decimal, 16=hexadecimal): ");
+        int baseOrigen = Leer.nextInt();
 
         // 1. Normalizar
         numero = numero.toUpperCase();
@@ -22,7 +28,7 @@ public class Ejercicio4_ConversorBases {
             String decimal = Long.toString(valor, 10);
             String hex = Long.toString(valor, 16).toUpperCase();
 
-            System.out.println("Número original: " + numero + " (base " + baseOrigen + ")");
+            System.out.println("\nNúmero original: " + numero + " (base " + baseOrigen + ")");
             System.out.println("Binario: " + binario);
             System.out.println("Decimal: " + decimal);
             System.out.println("Hexadecimal: " + hex);
@@ -37,7 +43,7 @@ public class Ejercicio4_ConversorBases {
             String decimal = big.toString(10);
             String hex = big.toString(16).toUpperCase();
 
-            System.out.println("Número original: " + numero + " (base " + baseOrigen + ")");
+            System.out.println("\nNúmero original: " + numero + " (base " + baseOrigen + ")");
             System.out.println("Binario: " + binario);
             System.out.println("Decimal: " + decimal);
             System.out.println("Hexadecimal: " + hex);
@@ -45,9 +51,9 @@ public class Ejercicio4_ConversorBases {
 
         // 4. Reportamos si hubo overflow
         if (usoBigInteger) {
-            System.out.println("El número era muy grande, se utilizo BigInteger.");
+            System.out.println("El número era muy grande, se utilizó BigInteger.");
         } else {
-            System.out.println("El número entró en un long sin ningun problema.");
+            System.out.println("El número entró en un long sin ningún problema.");
         }
     }
 }
