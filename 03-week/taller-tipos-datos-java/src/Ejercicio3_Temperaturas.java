@@ -1,8 +1,13 @@
+import java.util.Scanner;
+
 public class Ejercicio3_Temperaturas {
 
     public static void main(String[] args) {
-        // Texto con las temperaturas separadas por comas
-        String datos = "23.4,21.8,22.1,24.0,20.5";
+        Scanner Leer = new Scanner(System.in);
+
+        // Pedir las temperaturas al usuario
+        System.out.print("Ingrese las temperaturas separadas por comas: ");
+        String datos = Leer.nextLine();
 
         // 1. Dividimos el texto usando split(",")
         String[] partes = datos.split(",");
@@ -17,8 +22,8 @@ public class Ejercicio3_Temperaturas {
 
         // Variables para los cálculos
         double suma = 0;
-        double min = temperaturas[0]; 
-        double max = temperaturas[0]; 
+        double min = temperaturas[0];
+        double max = temperaturas[0];
 
         // 3. Recorremos para calcular suma, mínimo y máximo
         for (double t : temperaturas) {
@@ -30,21 +35,22 @@ public class Ejercicio3_Temperaturas {
         // 4. Promedio
         double promedio = suma / temperaturas.length;
 
-        // 5. Varianza = promedio 
+        // 5. Varianza
         double sumaVarianza = 0;
         for (double t : temperaturas) {
             sumaVarianza += Math.pow(t - promedio, 2);
         }
         double varianza = sumaVarianza / temperaturas.length;
 
-        // 6. Desviación estándar 
+        // 6. Desviación estándar
         double desviacion = Math.sqrt(varianza);
 
         // Mostramos los resultados
-        System.out.println("Temperaturas: " + datos);
+        System.out.println("\nTemperaturas ingresadas: " + datos);
         System.out.println("Mínimo: " + min);
         System.out.println("Máximo: " + max);
         System.out.println("Promedio: " + promedio);
         System.out.println("Desviación estándar: " + desviacion);
+
     }
 }

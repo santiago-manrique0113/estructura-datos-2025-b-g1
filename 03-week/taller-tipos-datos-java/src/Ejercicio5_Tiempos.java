@@ -7,12 +7,12 @@ public class Ejercicio5_Tiempos {
         // Se pide cuántos tiempos va a ingresar el usuario
         System.out.print("¿Cuántos tiempos vas a ingresar? ");
         int n = Leer.nextInt();
-        Leer.nextLine(); 
+        Leer.nextLine(); // Limpiar el buffer
 
         // Se crea un arreglo para guardar los tiempos ingresados
         String[] tiempos = new String[n];
 
-        // Pedimos  los tiempos en formato HH:MM:SS
+        // Pedimos los tiempos en formato HH:MM:SS
         for (int i = 0; i < n; i++) {
             System.out.print("Ingresa el tiempo " + (i + 1) + " (formato HH:MM:SS): ");
             tiempos[i] = Leer.nextLine();
@@ -23,13 +23,13 @@ public class Ejercicio5_Tiempos {
 
         // Convertimos cada string (HH:MM:SS) a segundos
         for (int i = 0; i < tiempos.length; i++) {
-            String[] partes = tiempos[i].split(":"); 
-            int horas = Integer.parseInt(partes[0]); 
-            int minutos = Integer.parseInt(partes[1]); 
-            int segundos = Integer.parseInt(partes[2]); 
+            String[] partes = tiempos[i].split(":");
+            int horas = Integer.parseInt(partes[0]);
+            int minutos = Integer.parseInt(partes[1]);
+            int segundos = Integer.parseInt(partes[2]);
 
             int totalSegundos = horas * 3600 + minutos * 60 + segundos;
-            tiemposSegundos[i] = totalSegundos; 
+            tiemposSegundos[i] = totalSegundos;
         }
 
         // Calculamos el total sumando todos los tiempos
@@ -42,19 +42,22 @@ public class Ejercicio5_Tiempos {
         double promedio = (double) total / tiemposSegundos.length;
 
         // Buscamos el tramo más largo
-        int maximo = tiemposSegundos[0]; 
+        int maximo = tiemposSegundos[0];
         int indiceMax = 0;
         for (int i = 1; i < tiemposSegundos.length; i++) {
             if (tiemposSegundos[i] > maximo) {
                 maximo = tiemposSegundos[i];
-                indiceMax = i; 
+                indiceMax = i;
             }
         }
 
         // Convertimos el total de segundos a formato HH:MM:SS
-        String totalFormato = convertirAFormato(total);
+        int horasTotales = total / 3600;
+        int minutosTotales = (total % 3600) / 60;
+        int segundosTotales = total % 60;
+        String totalFormato = String.format("%02d:%02d:%02d", horasTotales, minutosTotales, segundosTotales);
 
-        //resultados
+        // Resultados
         System.out.println("\n=== RESULTADOS ===");
         System.out.println("Tiempo total: " + totalFormato);
         System.out.println("Promedio (en segundos): " + promedio);
@@ -66,13 +69,5 @@ public class Ejercicio5_Tiempos {
             double porcentaje = (double) tiemposSegundos[i] / total * 100;
             System.out.println(tiempos[i] + " -> " + String.format("%.2f", porcentaje) + "%");
         }
-    }
-
-    // Convertir segundos a HH:MM:SS
-    public static String convertirAFormato(int segundosTotales) {
-        int horas = segundosTotales / 3600;
-        int minutos = (segundosTotales % 3600) / 60;
-        int segundos = segundosTotales % 60;
-        return String.format("%02d:%02d:%02d", horas, minutos, segundos);
     }
 }

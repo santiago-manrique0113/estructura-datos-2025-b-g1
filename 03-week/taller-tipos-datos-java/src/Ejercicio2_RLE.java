@@ -1,51 +1,68 @@
+import java.util.Scanner;
+
 public class Ejercicio2_RLE {
 
-    public static String comprimir(String texto) {
-        if (texto == null || texto.isEmpty()) {
-            return "";
+    public static void main(String[] args) {
+        Scanner Leer = new Scanner(System.in);
+
+        // Pedir texto al usuario
+        System.out.print("Ingrese el texto a comprimir: ");
+        String texto = Leer.nextLine();
+
+        // COMPRESIÓN
+        StringBuilder resultado = new StringBuilder();
+        if (!texto.isEmpty()) {
+            int contador = 1;
+            for (int i = 1; i < texto.length(); i++) {
+                char actual = texto.charAt(i);
+                char anterior = texto.charAt(i - 1);
+
+                if (actual == anterior) {
+                    contador++;
+                } else {
+                    resultado.append(anterior).append(contador);
+                    contador = 1;
+                }
+            }
+            resultado.append(texto.charAt(texto.length() - 1)).append(contador);
         }
 
-        StringBuilder resultado = new StringBuilder(); // Para construir el texto comprimido
-        int contador = 1; // Contador de repeticiones
+        String comprimido = resultado.toString();
+        System.out.println("Texto comprimido: " + comprimido);
+        // DESCOMPRESIÓN
+        StringBuilder descomprimido = new StringBuilder();
+        String numero = "";
 
-        // Recorremos el texto desde el segundo caracter
-        for (int i = 1; i < texto.length(); i++) {
-            char actual = texto.charAt(i);       // Caracter actual
-            char anterior = texto.charAt(i - 1); // Caracter anterior
+        for (int i = 0; i < comprimido.length(); i++) {
+            char c = comprimido.charAt(i);
 
-            if (actual == anterior) {
-                // Si se repite,se aumenta el contador
-                contador++;
-            } else {
-                // Si cambia el caracter, agregamos al resultado
-                resultado.append(anterior).append(contador);
-                contador = 1; // Se reinicia el contador
+            if (Character.isLetter(c)) {
+                if (!numero.isEmpty()) {
+                    int repeticiones = Integer.parseInt(numero);
+                    char anterior = comprimido.charAt(i - numero.length() - 1);
+                    for (int j = 1; j < repeticiones; j++) {
+                        descomprimido.append(anterior);
+                    }
+                    numero = "";
+                }
+                descomprimido.append(c);
+            } else if (Character.isDigit(c)) {
+                numero += c;
             }
         }
 
-        // Al final agregamos el último caracter con su contador
-        resultado.append(texto.charAt(texto.length() - 1)).append(contador);
+        if (!numero.isEmpty()) {
+            int repeticiones = Integer.parseInt(numero);
+            char anterior = comprimido.charAt(comprimido.length() - numero.length() - 1);
+            for (int j = 1; j < repeticiones; j++) {
+                descomprimido.append(anterior);
+            }
+        }
 
-        return resultado.toString();
-    }
-
-    // Método para calcular el ratio de compresión
-    public static double calcularRatio(String original, String comprimido) {
-        if (original.isEmpty()) return 0; // Evitar división por cero
-        return (double) comprimido.length() / original.length();
-    }
-
-    public static void main(String[] args) {
-        // Texto de ejemplo
-        String texto = "aaabbccccd";
-        System.out.println("Texto original: " + texto);
-
-        // Comprimir
-        String comprimido = comprimir(texto);
-        System.out.println("Texto comprimido: " + comprimido);
-
-        // Calcular ratio
-        double ratio = calcularRatio(texto, comprimido);
+        System.out.println("Texto descomprimido: " + descomprimido.toString());
+        // RATIO DE COMPRESIÓN
+        double ratio = texto.isEmpty() ? 0 : (double) comprimido.length() / texto.length();
         System.out.println("Ratio de compresión: " + ratio);
+
     }
 }
