@@ -220,9 +220,7 @@ public class parcial1 {
         return true;
     }
 
-    // ===========================
     // MÉTODOS DE PRÉSTAMOS
-    // ===========================
     // Registra un préstamo de libro
     static void prestarLibro() {
         int codigo = -1;
